@@ -1,0 +1,8 @@
+{
+    "name"        : "Text::Table::Simple",
+    "version"     : "0.0.1",
+    "description" : "Create basic tables from a two dimensional array.",
+    "auth"        : "github:ugexe",
+    "depends"     : [],
+    "source-url"  : "git://github.com/ugexe/Perl6-Text--Table--Simple.git"
+}
