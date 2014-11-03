@@ -61,5 +61,5 @@ sub _build_footer {
 
 # Iterate over ([1,2,3],[2,3,4,5],[33,4,3,2]) to find the longest string in each column
 sub _get_column_widths ( *@rows ) is export {
-    return @rows.map( -> $r { (reduce { max($^a, $^b)}, map { .chars }, @($r)); });
+    return @rows.map( -> $r { (reduce { max($^a, $^b)}, map { .chars }, map { @r[*;$_]; }, 0..@r.elems); });
 }
