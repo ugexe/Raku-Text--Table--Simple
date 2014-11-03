@@ -9,6 +9,14 @@ has Str $.header_corner_marker is rw;
 has Str $.footer_row_separator is rw;
 has Str $.footer_corner_marker is rw;
 
+# TODO
+# 1. Allow users to somehow insert separators in arbitrary locations 
+# Maybe like Text::Table::Simple.insert_line() in an array as a callback to insert the 
+# appropriate number of separators to complete the row after the entire table has been 
+# scanned?
+#
+# 2. Handling word wrapping/terminal widths properly
+
 # Change options format:
 # {
 #   row_separator    = '-';
