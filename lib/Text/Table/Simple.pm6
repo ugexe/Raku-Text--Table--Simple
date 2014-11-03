@@ -42,7 +42,24 @@ submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_ma
 }
 
 
-sub table(Array of Str :@rows, Array of Str :@columns?, Array of Str :@footers?) returns Array of Str is export {
+sub table (Array of Str :@rows, Array of Str :@columns?, Array of Str :@footers?) returns Array of Str is export {
 
 }
 
+
+sub _build_header {
+
+}
+
+sub _build_body {
+
+}
+
+sub _build_footer {
+
+}
+
+# Iterate over ([1,2,3],[2,3,4,5],[33,4,3,2]) to find the longest string in each column
+sub _get_column_widths ( *@rows ) is export {
+    return @rows.map( -> $r { (reduce { max($^a, $^b)}, map { .chars }, @($r)); });
+}

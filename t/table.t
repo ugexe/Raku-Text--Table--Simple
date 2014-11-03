@@ -6,9 +6,9 @@ use Text::Table::Simple;
 
 # Basic table testing using defaults
 {
-    my @columns = <id name email>;
+    my @columns = ['id','name','email'];
     my @rows   = (
-        <1 "John Doe" johndoe@cpan.org>,
+        [1,"John Doe",'johndoe@cpan.org'],
         [2,'Jane Doe','mrsjanedoe@hushmail.com'],
     );
 
@@ -19,7 +19,7 @@ use Text::Table::Simple;
 
     my $table_text = @rows.table(columns => \@columns, rows => \@rows);
 
-    ok $table_text, $expected, 'Basic table matched.';
+    is $table_text, $expected, 'Basic table matched.';
 }
 
 
