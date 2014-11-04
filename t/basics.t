@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 5;
 use Text::Table::Simple;
 
 my @columns = ['id','name','email'];
@@ -26,10 +26,27 @@ my @rows   = (
     );
 
     my @widths = _get_column_widths(@columns);
-    my @output = _build_header(\@widths, \@columns);
+    my @output = _build_header(@widths, @columns);
 
     is_deeply @output, @expected, 'Create a header'
 }
+
+# Test formatted multi-row header output
+{
+    my @expected = (
+        'O----O------O-------O',
+        '| id | name | email |',
+        'O----O------O-------O',
+        '| id | name | email |',
+        'O----O------O-------O',
+    );
+    my @cols   = [qw<id name email>], [qw<id name email>];
+    my @widths = _get_column_widths(@cols);
+    my @output = _build_header(@widths, @cols);
+
+    is_deeply @output, @expected, 'Create a header'
+}
+
 
 
 
