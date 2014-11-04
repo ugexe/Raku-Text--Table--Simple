@@ -69,13 +69,13 @@ sub _build_header (@widths, @columns, %options = %defaults) is export {
     my $mark = 'O';
     my $csep = '|';
 
-    # Top border
-    @processed.push( $mark ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
-
     # Header labels
     my $format = "$csep " ~ join(" $csep ", @widths.map({"%-{$_}s"}) ) ~ " $csep";
-    my $line   = sprintf( $format, @columns.map({ $_ // '' }) );
-    @processed.push($line);
+    for @columns -> $headings {
+      # Top border
+      @processed.push( $mark ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
+      @processed.push(sprintf($format, @$headings.map({ $_ // ''})));
+    }
 
     # Bottom header border
     @processed.push( $mark ~ $sep ~ join("$sep$mark$sep", @widths.map({ $sep x $_ }) ) ~ $sep ~ $mark );
