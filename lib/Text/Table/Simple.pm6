@@ -10,9 +10,9 @@ has Str $.footer_row_separator is rw;
 has Str $.footer_corner_marker is rw;
 
 # TODO
-# 1. Allow users to somehow insert separators in arbitrary locations 
-# Maybe like Text::Table::Simple.insert_line() in an array as a callback to insert the 
-# appropriate number of separators to complete the row after the entire table has been 
+# 1. Allow users to somehow insert separators in arbitrary locations
+# Maybe like Text::Table::Simple.insert_line() in an array as a callback to insert the
+# appropriate number of separators to complete the row after the entire table has been
 # scanned?
 #
 # 2. Handling word wrapping/terminal widths properly
@@ -50,11 +50,11 @@ constant %defaults = {
   },
 };
 
-submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_marker = '+', 
+submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_marker = '+',
     :$!header_row_separator = '=', :$!header_corner_marker = 'O',
     :$!footer_row_separator = '=', :$!footer_corner_marker = 'O' ) {
     # nothing to do here, the signature binding
-    # does all the work for us.    
+    # does all the work for us.
 }
 
 
@@ -63,24 +63,24 @@ method table (Array of Str :@rows, Array of Str :@columns?, Array of Str :@foote
 }
 
 
-sub _build_header ($widths, $columns, %options = %defaults) is export {
+sub _build_header (@widths, @columns, %options = %defaults) is export {
     my Str @processed;
     my $sep  = '-';
     my $mark = 'O';
     my $csep = '|';
 
     # Top border
-    @processed.push( $mark ~ $sep ~ @$widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
+    @processed.push( $mark ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
 
     # Header labels
-    my $format = $csep ~ join(" $csep ", @$widths.map({"%-{$_}s"}) ) ~ " $csep";
-    my $line   = sprintf( $format, @$columns.map({ $_ // '' }) );
+    my $format = "$csep " ~ join(" $csep ", @widths.map({"%-{$_}s"}) ) ~ " $csep";
+    my $line   = sprintf( $format, @columns.map({ $_ // '' }) );
     @processed.push($line);
 
     # Bottom header border
-    @processed.push( $mark ~ $sep ~ join("$sep$mark$sep", @$widths.map({ $sep x $_ }) ) ~ $sep ~ $mark );
+    @processed.push( $mark ~ $sep ~ join("$sep$mark$sep", @widths.map({ $sep x $_ }) ) ~ $sep ~ $mark );
 
-    return \@processed;
+    return @processed;
 }
 
 method _build_body {
