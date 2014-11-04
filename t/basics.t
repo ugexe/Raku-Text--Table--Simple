@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 6;
 use Text::Table::Simple;
 
 my @columns = ['id','name','email'];
@@ -22,7 +22,7 @@ my @rows   = (
     my @expected = (
         'O----O------O-------O',
         '| id | name | email |',
-        'O----O------O-------O',
+    #   'O----O------O-------O',
     );
 
     my @widths = _get_column_widths(@columns);
@@ -34,20 +34,32 @@ my @rows   = (
 # Test formatted multi-row header output
 {
     my @expected = (
-        'O----O------O-------O',
-        '| id | name | email |',
-        'O----O------O-------O',
-        '| id | name | email |',
-        'O----O------O-------O',
+        'O-----O-------O--------O',
+        '| id  | name  | email  |',
+        '| id2 | name2 | email2 |',
+    #   'O----O------O-------O',
     );
-    my @cols   = [qw<id name email>], [qw<id name email>];
-    my @widths = _get_column_widths(@cols);
-    my @output = _build_header(@widths, @cols);
 
-    is_deeply @output, @expected, 'Create a header'
+    my @widths = _get_column_widths( (@columns,@columns) );
+    my @output = _build_header( @widths, (@columns, @columns) );
+
+    is_deeply @output, @expected, 'Create a multi row header'
 }
 
+# Test formatted multi-row header output
+{
+    my @expected = (
+        'O----O----------O-------------------------O',
+        '| id |   name   |          email          |',
+        '------------------------------------------|',
+        '|  1 | John Doe | johndoe@cpan.org        |',
+        '|  2 | Jane Doe | mrsjanedoe@hushmail.com |',
+    );
 
+    my @output = _build_table(@columns, @rows);
+
+    is_deeply @output, @expected, 'Create a table (header + body)'
+}
 
 
 done;
