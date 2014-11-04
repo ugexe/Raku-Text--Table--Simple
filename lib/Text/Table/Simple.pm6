@@ -34,6 +34,22 @@ has Str $.footer_corner_marker is rw;
 #   }
 # }
 
+constant %defaults = {
+  row_separator    => '-',
+  column_separator => '|',
+  corner_marker    => '+',
+  header => {
+    row_separator    => '=',
+    column_separator => '|',
+    corner_marker    => 'O',
+  },
+  footer => {
+    row_separator    => '~',
+    column_separator => 'I',
+    corner_marker    => '%',
+  },
+};
+
 submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_marker = '+', 
     :$!header_row_separator = '=', :$!header_corner_marker = 'O',
     :$!footer_row_separator = '=', :$!footer_corner_marker = 'O' ) {
@@ -42,20 +58,37 @@ submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_ma
 }
 
 
-sub table (Array of Str :@rows, Array of Str :@columns?, Array of Str :@footers?) returns Array of Str is export {
+method table (Array of Str :@rows, Array of Str :@columns?, Array of Str :@footers?) returns Array of Str is export {
 
 }
 
 
-sub _build_header {
+sub _build_header ($widths, $columns, %options = %defaults) is export {
+    my Str @processed;
+    my $sep  = '-';
+    my $mark = 'O';
+
+    # Top border
+    @processed.push( $mark ~ $sep ~ @$widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
+
+    # Header labels
+    for @$widths Z @$columns -> $width, $text {
+        @processed.push( sprintf("%-{$width}s", $text // '') );
+    }
+
+    # Bottom header border
+    @processed.push( $mark~$sep
+                        ~ join("$sep$mark$sep", @$widths.map({ $sep x $_ }) )
+                        ~ $sep~$mark );
+
+    return \@processed;
+}
+
+method _build_body {
 
 }
 
-sub _build_body {
-
-}
-
-sub _build_footer {
+method _build_footer {
 
 }
 
