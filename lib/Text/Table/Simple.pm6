@@ -67,19 +67,18 @@ sub _build_header ($widths, $columns, %options = %defaults) is export {
     my Str @processed;
     my $sep  = '-';
     my $mark = 'O';
+    my $csep = '|';
 
     # Top border
     @processed.push( $mark ~ $sep ~ @$widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
 
     # Header labels
-    for @$widths Z @$columns -> $width, $text {
-        @processed.push( sprintf("%-{$width}s", $text // '') );
-    }
+    my $format = $csep ~ join(" $csep ", @$widths.map({"%-{$_}s"}) ) ~ " $csep";
+    my $line   = sprintf( $format, @$columns.map({ $_ // '' }) );
+    @processed.push($line);
 
     # Bottom header border
-    @processed.push( $mark~$sep
-                        ~ join("$sep$mark$sep", @$widths.map({ $sep x $_ }) )
-                        ~ $sep~$mark );
+    @processed.push( $mark ~ $sep ~ join("$sep$mark$sep", @$widths.map({ $sep x $_ }) ) ~ $sep ~ $mark );
 
     return \@processed;
 }

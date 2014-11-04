@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 4;
 use Text::Table::Simple;
 
 my @columns = ['id','name','email'];
