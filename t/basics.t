@@ -39,9 +39,10 @@ my @rows   = (
         '| id2 | name2 | email2 |',
     #   'O----O------O-------O',
     );
+    my @columns2 = @columns.map({ .map({ $_ ~ '2' }) });
 
-    my @widths = _get_column_widths( (@columns,@columns) );
-    my @output = _build_header( @widths, (@columns, @columns) );
+    my @widths = _get_column_widths( (@columns,@columns2) );
+    my @output = _build_header( @widths, (@columns, @columns2) );
 
     is_deeply @output, @expected, 'Create a multi row header'
 }
