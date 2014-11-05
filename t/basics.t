@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 8;
 use Text::Table::Simple;
 
 my @columns = ['id','name','email'];
@@ -68,7 +68,7 @@ my @rows   = (
 
 
 
-# Test formatted multi-row header output
+# Test formatted table
 {
     my @expected = (
         'O----O----------O-------------------------O',
@@ -81,6 +81,7 @@ my @rows   = (
 
     my @output = _build_table(@columns, @rows);
 
+    is _build_table(@columns,@rows), lol2table(@columns,@rows), 'Public api matches private api';
     is_deeply @output, @expected, 'Create a table (header + body)'
 }
 

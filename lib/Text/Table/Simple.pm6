@@ -61,6 +61,10 @@ submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_ma
 #method table (Array of Str :@rows, Array of Str :@columns?, Array of Str :@footers?) returns Array of Str is export {
 #}
 
+sub lol2table (@header_rows,@body_rows?,@footer_rows?) is export {
+    _build_table(@header_rows,@body_rows,@footer_rows);
+}
+
 sub _build_table (@header_rows,@body_rows?,@footer_rows?) is export {
     my @widths = _get_column_widths(@header_rows,@body_rows);  
     return _build_header(@widths,@header_rows), _build_body(@widths,@body_rows), _build_footer(@widths);
