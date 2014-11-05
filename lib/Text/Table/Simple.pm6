@@ -61,9 +61,9 @@ submethod BUILD (:$!row_separator = '-', :$!column_separator = '|', :$!corner_ma
 #method table (Array of Str :@rows, Array of Str :@columns?, Array of Str :@footers?) returns Array of Str is export {
 #}
 
-sub _build_table (*@rows) is export {
-    my @widths = _get_column_widths(@rows);  
-    return _build_header(@widths,@rows), _build_body(@widths,@rows);
+sub _build_table (@header_rows,@body_rows?,@footer_rows?) is export {
+    my @widths = _get_column_widths(@header_rows,@body_rows);  
+    return _build_header(@widths,@header_rows), _build_body(@widths,@body_rows), _build_footer(@widths);
 }
 
 sub _build_header (@widths, @columns, %options = %defaults) is export {
@@ -75,8 +75,7 @@ sub _build_header (@widths, @columns, %options = %defaults) is export {
     # Top border
     @processed.push( $mark ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
 
-    # Bottom header border
-    @processed.push( _build_row(@widths, @$_) ) for @columns; # TODO: pass %options
+    @processed.push( _row2str(@widths, @$_) ) for @columns; # TODO: pass %options
 
     return @processed;
 }
@@ -88,17 +87,26 @@ sub _build_body (@widths, @rows, %options = %defaults) is export {
     my $csep = '|';
 
     # Top border
-    @processed.push( $sep ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$sep$sep") ~ $sep ~ $sep );
+    @processed.push( $csep ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$sep$sep") ~ $sep ~ $csep );
 
-    # Bottom header border
-    @processed.push( _build_row(@widths, @$_) ) for @rows; # TODO: pass %options
+    @processed.push( _row2str(@widths, @$_) ) for @rows; # TODO: pass %options
 
     return @processed;
 }
 
+# For now just adds the bottom border although you should be able to pass the result of
+# _build_header or _build_body so you can format it without or with row separators
+sub _build_footer (@widths,*@rows) {
+    my @processed;
+    my $sep  = '-';
+    my $mark = 'O';
+    my $csep = '|';
+
+    @processed.push( $mark ~ $sep ~ @widths.map({ $sep x $_ }).join("$sep$mark$sep") ~ $sep ~ $mark );
+}
 
 # returns formatted row
-sub _build_row (@widths, @cells, %options = %defaults) {
+sub _row2str (@widths, @cells, %options = %defaults) {
     my $sep  = '-';
     my $mark = 'O';
     my $csep = '|';
@@ -107,6 +115,7 @@ sub _build_row (@widths, @cells, %options = %defaults) {
     my $format = "$csep " ~ join(" $csep ", @widths.map({"%-{$_}s"}) ) ~ " $csep";
     return sprintf( $format, @cells.map({ $_ // '' }) ); 
 }
+
 
 method _build_body {
 
