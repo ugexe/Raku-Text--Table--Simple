@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 7;
 use Text::Table::Simple;
 
 my @columns = ['id','name','email'];
@@ -31,20 +31,36 @@ my @rows   = (
     is_deeply @output, @expected, 'Create a header'
 }
 
-# Test formatted multi-row header output
+# Test formatted multi-row header output (2nd longer)
 {
+    my @columns2 = @columns.map({ .map({ $_ ~ '2' }) });
+
     my @expected = (
         'O-----O-------O--------O',
         '| id  | name  | email  |',
         '| id2 | name2 | email2 |',
     #   'O----O------O-------O',
     );
-    my @columns2 = @columns.map({ .map({ $_ ~ '2' }) });
 
-    my @widths = _get_column_widths( (@columns,@columns2) );
-    my @output = _build_header( @widths, (@columns, @columns2) );
+    # Test when first row labels are shorter than others
+    {
+        my @widths = _get_column_widths( (@columns,@columns2) );
+        my @output = _build_header( @widths, (@columns, @columns2) );
 
-    is_deeply @output, @expected, 'Create a multi row header'
+        is_deeply @output, @expected, 'Create a multi row header'
+    }
+
+    # Test when last row labels are shorter than others
+    {
+        my @widths = _get_column_widths( (@columns2,@columns) );
+        my @output = _build_header( @widths, (@columns2, @columns) );
+
+        (@expected[1], @expected[2]) = (@expected[1], @expected[2]);
+        is_deeply @output, @expected, 'Create a multi row header'
+    }
+
+    # TODO:
+    # Test a mix of 1st and 2nd row longest widths
 }
 
 # Test formatted multi-row header output
