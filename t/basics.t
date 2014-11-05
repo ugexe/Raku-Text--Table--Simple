@@ -9,6 +9,8 @@ my @rows   = (
     [2,'Jane Doe','mrsjanedoe@hushmail.com'],
 );
 
+
+
 # Determine max column width
 {
     my @widths = _get_column_widths(@columns,@rows);
@@ -16,6 +18,8 @@ my @rows   = (
     is @widths[1], 8,  'Column 2 max width of 8';
     is @widths[2], 23, 'Column 3 max width of 23';
 }
+
+
 
 # Test formatted header output
 {
@@ -30,6 +34,8 @@ my @rows   = (
 
     is_deeply @output, @expected, 'Create a header'
 }
+
+
 
 # Test formatted multi-row header output (2nd longer)
 {
@@ -63,6 +69,8 @@ my @rows   = (
     # Test a mix of 1st and 2nd row longest widths
 }
 
+
+
 # Test formatted multi-row header output
 {
     my @expected = (
@@ -77,6 +85,7 @@ my @rows   = (
 
     is_deeply @output, @expected, 'Create a table (header + body)'
 }
+
 
 
 done;
