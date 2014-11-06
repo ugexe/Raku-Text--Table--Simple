@@ -26,7 +26,7 @@ my @rows   = (
     my @expected = (
         'O----O------O-------O',
         '| id | name | email |',
-    #   'O----O------O-------O',
+        'O====O======O=======O',
     );
 
     my @widths = _get_column_widths(@columns);
@@ -44,7 +44,7 @@ my @rows   = (
         'O-----O-------O--------O',
         '| id  | name  | email  |',
         '| id2 | name2 | email2 |',
-    #   'O-----O-------O--------O',
+        'O=====O=======O========O',
     );
 
     # Test when first row labels are shorter than others
@@ -73,10 +73,10 @@ my @rows   = (
     my @expected = (
         'O----O----------O-------------------------O',
         '| id | name     | email                   |',
-        '|-----------------------------------------|',
+        'O====O==========O=========================O',
         '| 1  | John Doe | johndoe@cpan.org        |',
         '| 2  | Jane Doe | mrsjanedoe@hushmail.com |',
-        'O----O----------O-------------------------O',
+        '-------------------------------------------',
     );
 
     my @output = _build_table(@columns, @rows);

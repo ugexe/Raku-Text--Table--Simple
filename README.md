@@ -18,10 +18,10 @@ Text::Table::Simple - Create basic tables from a two dimensional array.
 
     # O----O----------O-------------------------O
     # | id | name     | email                   |
-    # |-----------------------------------------|
+    # O====O==========O=========================O
     # | 1  | John Doe | johndoe@cpan.org        |
     # | 2  | Jane Doe | mrsjanedoe@hushmail.com |
-    # O----O----------O-------------------------O
+    # -------------------------------------------
 
 
 # DESCRIPTION
@@ -47,14 +47,35 @@ Output table headers and rows. Take showing your Benchmark output for example:
 
 # METHODS
 
-## lol2table (@header_rows,@body_rows?,@footer_rows?)
+### lol2table (@header_rows,@body_rows?,@footer_rows?,%options?)
 
 Create a an array of strings that can be printed line by line to create a table view of the data.
+
+##### %options
+    # default values
+    %options = {
+      rows => {
+          column_separator     => '|',
+          corner_marker        => '-',
+          bottom_border        => '-',
+      },
+      headers => {
+          top_border           => '-',
+          column_separator     => '|',
+          corner_marker        => 'O',
+          bottom_border        => '=',
+      },
+      footers => {
+          column_separator     => 'I',
+          corner_marker        => '%',
+          bottom_border        => '*',
+      },
+    };
 
 
 # TODO
 
-## as_table
+### as_table
 
 Arguments: \@rows 2 dimentional array ref 
 $rows: 2 dimentional array ref
@@ -65,10 +86,6 @@ Prints out the 2D array as a table.
 
     @some_array.as_table(rows => @rows);
     # or maybe @some_array.as_table(headers => @headers);
-
-## options
-
-Allow changing the borders, corner markers, etc
 
 
 # BUGS
