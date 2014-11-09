@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 6;
 use Text::Table::Simple;
 
 my @columns = ['id','name','email'];
@@ -14,9 +14,7 @@ my @rows   = (
 # Determine max column width
 {
     my @widths = _get_column_widths(@columns,@rows);
-    is @widths[0], 2,  'Column 1 max width of 2';  # id
-    is @widths[1], 8,  'Column 2 max width of 8';  # John Doe
-    is @widths[2], 23, 'Column 3 max width of 23'; # mrsjanedoe@hushmail.com
+    is_deeply @widths, [2,8,23], 'Max column widths';
 }
 
 
