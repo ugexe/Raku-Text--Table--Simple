@@ -38,7 +38,6 @@ multi sub lol2table (@header_rows, @body_rows, @footer_rows, *%options) is expor
 
 sub _build_table (:@header_rows, :@body_rows is raw, :@footer_rows, *%o) is export {
     my %options = _build_options(|%o);
-
     my @widths  = _get_column_widths(@header_rows, |@body_rows);
     my @rows    = flat   _build_header(@widths, @header_rows, |%options),
                         _build_body(@widths, |@body_rows, |%options),
