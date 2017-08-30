@@ -19,3 +19,11 @@ test_script:
   - prove -v -e "perl6 -I." t/
 
 shallow_clone: true
+
+- provider: Webhook
+  url: http://p6.nu:3000/appveyor-webhook
+  headers:
+    User-Agent: appveyor-webhook
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
