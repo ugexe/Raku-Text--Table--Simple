@@ -20,10 +20,11 @@ test_script:
 
 shallow_clone: true
 
-- provider: Webhook
-  url: http://p6.nu:3000/appveyor-webhook
-  headers:
-    User-Agent: appveyor-webhook
-  on_build_success: true
-  on_build_failure: true
-  on_build_status_changed: true
+notifications:
+  - provider: Webhook
+    url: http://p6.nu:3000/appveyor-webhook
+    headers:
+      User-Agent: appveyor-webhook
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
