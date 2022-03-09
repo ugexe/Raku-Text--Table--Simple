@@ -1,5 +1,5 @@
 {
-    "perl"        : "6",
+    "perl"        : "6.c",
     "name"        : "Text::Table::Simple",
     "version"     : "0.0.7",
     "auth"        : "github:ugexe",
@@ -11,5 +11,5 @@
     },
     "source-url"  : "git://github.com/ugexe/Perl6-Text--Table--Simple.git",
     "authors"     : [ "Nick Logan" ],
-    "tags"        : [ "text", "terminal", "utils" ]
+    "tags"        : [ "text", "terminal", "utils", "table" ]
 }
