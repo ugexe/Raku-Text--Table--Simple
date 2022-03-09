@@ -9,7 +9,10 @@
     "provides"    : {
         "Text::Table::Simple" : "lib/Text/Table/Simple.pm6"
     },
-    "source-url"  : "git://github.com/ugexe/Perl6-Text--Table--Simple.git",
+    "support" : {
+        "bugtracker" : "https://github.com/ugexe/Perl6-Text--Table--Simple/issues",
+        "source"     : "https://github.com/ugexe/Perl6-Text--Table--Simple.git"
+    },
     "authors"     : [ "Nick Logan" ],
     "tags"        : [ "text", "terminal", "utils", "table" ]
 }
