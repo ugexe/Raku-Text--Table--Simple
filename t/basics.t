@@ -1,33 +1,44 @@
-use v6;
+use v6.c;
 use Test;
-plan 6;
+plan 7;
 
 use Text::Table::Simple;
-
 
 my @columns = <id name email>;
 my @rows   = (
     [1,"John Doe",'johndoe@cpan.org'],
     [2,'Jane Doe','mrsjanedoe@hushmail.com'],
 );
-constant %options = {
-  rows => {
-      column_separator     => '|',
-      corner_marker        => '-',
-      bottom_border        => '-',
-  },
-  headers => {
-      top_border           => '-',
-      column_separator     => '|',
-      corner_marker        => 'O',
-      bottom_border        => '=',
-  },
-  footers => {
-      column_separator     => 'I',
-      corner_marker        => '%',
-      bottom_border        => '*',
-  },
-};
+my %options =
+    rows => {
+        column_separator           => '|',
+        corner_marker              => '-',
+        bottom_corner_marker       => '-',
+        bottom_left_corner_marker  => '-',
+        bottom_right_corner_marker => '-',
+        bottom_border              => '-',
+    },
+    headers => {
+        top_border                 => '-',
+        column_separator           => '|',
+        corner_marker              => 'O',
+        top_corner_marker          => 'O',
+        top_right_corner_marker    => 'O',
+        top_left_corner_marker     => 'O',
+        bottom_corner_marker       => 'O',
+        bottom_left_corner_marker  => 'O',
+        bottom_right_corner_marker => 'O',
+        bottom_border              => '=',
+    },
+    footers => {
+        column_separator           => 'I',
+        corner_marker              => '%',
+        bottom_corner_marker       => '%',
+        bottom_left_corner_marker  => '%',
+        bottom_right_corner_marker => '%',
+        bottom_border              => '*',
+    },
+;
 
 
 # Determine max column width
@@ -97,6 +108,53 @@ subtest {
     is @output, lol2table(@columns, @rows), 'Public api matches private api';
     is-deeply @output, @expected, 'Create a table (header + body)'
 }, "_build_table";
+
+# Test formatted table with custom options
+subtest {
+    my %custom_options = %(
+        rows => {
+            column_separator           => '│',
+            bottom_left_corner_marker  => '├',
+            bottom_right_corner_marker => '┤',
+            bottom_corner_marker       => '┼',
+            bottom_border              => '─',
+        },
+        headers => {
+            top_border                 => '═',
+            column_separator           => '│',
+            top_corner_marker          => '╤',
+            top_left_corner_marker     => '╒',
+            top_right_corner_marker    => '╕',
+            bottom_left_corner_marker  => '╞',
+            bottom_right_corner_marker => '╡',
+            bottom_corner_marker       => '╪',
+            bottom_border              => '═',
+        },
+        footers => {
+            column_separator           => '┃',
+            bottom_corner_marker       => '┻',
+            bottom_left_corner_marker  => '┗',
+            bottom_right_corner_marker => '┛',
+            bottom_border              => '━',
+        },
+    );
+    my @expected = (
+        '╒════╤══════════╤═════════════════════════╕',
+        '│ id │ name     │ email                   │',
+        '╞════╪══════════╪═════════════════════════╡',
+        '│ 1  │ John Doe │ johndoe@cpan.org        │',
+        '│ 2  │ Jane Doe │ mrsjanedoe@hushmail.com │',
+        '├────┼──────────┼─────────────────────────┤',
+        '┃ *  ┃ a        ┃ footer                  ┃',
+        '┗━━━━┻━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━┛',
+    );
+
+    my @footer = <* a footer>;
+    my @output = _build_table( :header_rows(@columns), :body_rows(@rows), :footer_rows(@footer), |%custom_options );
+
+    is @output, lol2table(@columns, @rows, @footer, |%custom_options), 'Public api matches private api';
+    is-deeply @output, @expected, 'Create a table (header + body + footer + custom options)'
+}, "_build_table with custom options and footer";
 
 # Test formatted table with multi-line cells
 subtest {
