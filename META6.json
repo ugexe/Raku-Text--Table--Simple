@@ -7,7 +7,7 @@
     "description" : "Create basic tables from a two dimensional array",
     "depends"     : [ ],
     "provides"    : {
-        "Text::Table::Simple" : "lib/Text/Table/Simple.pm6"
+        "Text::Table::Simple" : "lib/Text/Table/Simple.rakumod"
     },
     "support" : {
         "bugtracker" : "https://github.com/ugexe/Perl6-Text--Table--Simple/issues",
