@@ -1,6 +1,6 @@
 use Text::Table::Simple;
 
-use Text::Levenshtein::Damerau; 
+use Text::Levenshtein::Damerau;
 use Benchmark;
 
 my $str1 = "lsd";
