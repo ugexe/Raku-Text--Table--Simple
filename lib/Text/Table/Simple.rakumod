@@ -1,4 +1,3 @@
-use v6.c;
 unit module Text::Table::Simple;
 
 my %defaults is Map =
