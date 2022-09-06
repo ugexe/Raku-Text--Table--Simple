@@ -5,6 +5,7 @@
     "license"     : "Artistic-2.0",
     "description" : "Create basic tables from a two dimensional array",
     "depends"     : [ ],
+    "test-depends" : [ "Test:ver<6.c+>" ],
     "provides"    : {
         "Text::Table::Simple" : "lib/Text/Table/Simple.rakumod"
     },
