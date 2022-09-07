@@ -1,15 +1,8 @@
-=pod
-
-=encoding utf8
-
-=head2 Text::Table::Simple
+## Text::Table::Simple
 
 Create basic tables from a two dimensional array
 
-=for HTML <a href="https://travis-ci.org/ugexe/Perl6-Text--Table--Simple"><img src="https://travis-ci.org/ugexe/Perl6-Text--Table--Simple.svg?branch=master"></a>
-          <a href="https://ci.appveyor.com/project/ugexe/Perl6-Text-Table-Simple/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/ugexe/Perl6-Text--Table--Simple?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true"></a>
-
-=head3 Synopsis
+## Synopsis
 
     use Text::Table::Simple;
 
@@ -29,15 +22,11 @@ Create basic tables from a two dimensional array
     # | 2  | Jane Doe | mrsjanedoe@hushmail.com |
     # -------------------------------------------
 
-=head2 Exports
+## Exports
 
-=head4 routine B<lol2table>
+#### lol2table(@body, *%options --> Str @rows)
 
-B<Args> C<@body, *%options>
-
-B<Args> C<@header, @body, @footer?, *%options>
-
-B<Returns> C<Str @rows>
+#### lol2table(@header, @body, @footer?, *%options --> Str @rows)
 
 Create a an array of strings that can be printed line by line to create a table view of the data.
 
@@ -52,7 +41,7 @@ Create a an array of strings that can be printed line by line to create a table 
     | 3   | 4    |
     --------------
 
-B<Options>
+##### Options
 
     # default values
     %options = %(
@@ -111,7 +100,7 @@ C<corner_marker> is used when more specific corner markers are not set.
     │ 2  │ Jane Doe │ mrsjanedoe@hushmail.com │
     └────┴──────────┴─────────────────────────┘
 
-=head3 Examples
+## Examples
 
 Showing your Benchmark output:
 
@@ -134,6 +123,4 @@ Showing your Benchmark output:
 
     .say for @table;
 
-Also see the L<examples|https://github.com/ugexe/Perl6-Text--Table--Simple/tree/master/examples> directory
-
-=cut
+Also see the [examples](https://github.com/ugexe/Raku-Text--Table--Simple/tree/main/examples) directory.
